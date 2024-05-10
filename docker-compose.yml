@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  valle-segvial-front:
+    image: vallelabs/dpi-frontend:1.1.1-tumlab
+    container_name: valle-segvial-front
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "tumlab.local:192.168.4.1"
+    environment:
+      ENVIRONMENT : production
+      URLAPI : http://tumlab.local:4011
+      URLGAME : http://tumlab.local:3012
+      URLLIBRARY : http://tumlab.local:3012
+    ports:
+      - "3010:80"
+    networks:
+      - valle-segvial-net
+  valle-segvial-back:
+    image: vallelabs/dpi-api:1.0.3
+    container_name: valle-segvial-back
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "tumlab.local:192.168.4.1"
+    environment:
+      JWT_EXPIRATION_IN_MINUTES : 4320
+      JWT_SECRET : MyUltraSecurePassWordIWontForgetToChange
+      MYSQL_DATABASE : seguridadvial
+      MYSQL_HOST : host.docker.internal
+      MYSQL_PASSWORD : Tumlab2022*
+      MYSQL_PORT : 3306
+      MYSQL_USER : root
+      URL_SWAGGER_PRODUCTION : http://tumlab.local:4011/api/v1
+    ports:
+      - "4011:4000"
+    networks:
+      - valle-segvial-net
+  valle-segvial-game:
+    image: vallelabs/seguridad-vial-game:3.2.3
+    container_name: valle-segvial-game
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "tumlab.local:192.168.4.1"
+    ports:
+      - "3012:80"
+    networks:
+      - valle-segvial-net
+networks:
+  valle-segvial-net:
+    driver: bridge
