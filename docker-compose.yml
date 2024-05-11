@@ -37,7 +37,7 @@ services:
     networks:
       - valle-segvial-net
   valle-segvial-game:
-    image: vallelabs/seguridad-vial-game:3.2.3
+    image: vallelabs/seguridad-vial-game:3.2.4
     container_name: valle-segvial-game
     restart: always
     extra_hosts:
