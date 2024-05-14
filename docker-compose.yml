@@ -7,11 +7,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
       - "tumlab.local:192.168.4.1"
-    environment:
-      ENVIRONMENT : production
-      URLAPI : http://tumlab.local:4011
-      URLGAME : http://tumlab.local:3012
-      URLLIBRARY : http://tumlab.local:3012
+    env_file:
+      - /tumlab/apps/envs/.env-segvial-front
     ports:
       - "3010:80"
     networks:
@@ -23,15 +20,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
       - "tumlab.local:192.168.4.1"
-    environment:
-      JWT_EXPIRATION_IN_MINUTES : 4320
-      JWT_SECRET : MyUltraSecurePassWordIWontForgetToChange
-      MYSQL_DATABASE : seguridadvial
-      MYSQL_HOST : host.docker.internal
-      MYSQL_PASSWORD : Tumlab2022*
-      MYSQL_PORT : 3306
-      MYSQL_USER : root
-      URL_SWAGGER_PRODUCTION : http://tumlab.local:4011/api/v1
+    env_file:
+      - /tumlab/apps/envs/.env-segvial-back
     ports:
       - "4011:4000"
     networks:
